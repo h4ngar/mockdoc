@@ -15,7 +15,7 @@ module.exports = {
         }
     },
     output: {
-        publicPath: '/public/dist/',
+        path: path.resolve(__dirname, 'public/dist')
     },
     optimization: {
         splitChunks: {

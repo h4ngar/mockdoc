@@ -2,7 +2,7 @@
 .scannerwork/
 /coverage/
 /lib/
-/dist/
+/public/dist/
 /node_modules/
 npm-debug.log
 .env
