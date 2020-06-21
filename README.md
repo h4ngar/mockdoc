@@ -12,7 +12,7 @@ You can fully manage your mocks and customize them. They were stored in a mongo 
 
 ```
 $ docker run -it --rm \
-    -name mockdoc \
+    --name mockdoc \
     -p 3000:3000 \
     -e MONGO_SERVER="mongo" \
     -e MONGO_DATABASE="your-db-name" \
