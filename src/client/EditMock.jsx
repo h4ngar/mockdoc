@@ -9,6 +9,7 @@ import { getCategoryOptions } from './helper';
 export const EditMock = () => {
     const { mockStore } = useStore('mockStore');
     const { categoriesStore } = useStore('categoriesStore');
+    const MOCK_SERVICE_URL = (window.location.protocol + window.location.hostname + '/mock/');
 
     useEffect(() => {
         categoriesStore.getProxy().read({})
@@ -32,7 +33,7 @@ export const EditMock = () => {
     };
 
     const onUrlRender = (data) => {
-        return `https://mockdoc.garic.biz/mock/${data.value}`;
+        return MOCK_SERVICE_URL + data.value;
     }
 
     const onSearchChange = async (e) => {
@@ -74,8 +75,8 @@ export const EditMock = () => {
                         <Column fieldType={'select'} title='Charset' dataIndex={'charset'} fieldProps={{ options: charsetTypeOptions }}
                                 required hideInGrid/>
 
-                        <Column title={'HTTP Headers'} dataIndex={'response'} fieldType={'object'} required/>
-                        <Column title={'HTTP Response'} dataIndex={'headers'} fieldType={'object'} required/>
+                        <Column title={'HTTP Headers'} dataIndex={'headers'} fieldType={'object'} />
+                        <Column title={'HTTP Response'} dataIndex={'response'} fieldType={'object'} />
                     </FormGrid>
                 </Card>
             </Col>

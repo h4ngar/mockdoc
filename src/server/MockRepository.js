@@ -81,7 +81,7 @@ export class MockRepository {
 
         let updated = await this.model.findOneAndUpdate(
             { _id },
-            { status, title, contentType, charset, headers, category, response },
+            { status, title, contentType, charset, headers: JSON.parse(headers), category, response: JSON.parse(response) },
             { new: true, upsert: true }
         );
 

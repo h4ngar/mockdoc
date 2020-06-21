@@ -2,7 +2,7 @@ version: '3'
 
 services:
   mockdoc:
-    image: registry.garic.biz/skeletons/mockdoc:latest
+    image: mockdoc:latest
     container_name: mockdoc
     restart: unless-stopped
     environment:

@@ -12,6 +12,7 @@ export const NewMock = () => {
     const updated = mockStore.getUpdatedRecords();
     const categoriesRecords = categoriesStore.getRecords();
     const categoryOptions = getCategoryOptions(categoriesRecords[0].list);
+    const MOCK_SERVICE_URL = (window.location.protocol + window.location.hostname + '/mock/');
 
     useEffect(() => {
         categoriesStore.getProxy().read({})
@@ -44,12 +45,12 @@ export const NewMock = () => {
     return (
         <Row>
             <Col {...sizedContent} >
-                <Card title={'Design Mock'} >
+                <Card title={'Design Mock'}>
                     <Form onSubmit={handleSubmit} record={initialRecord}>
-                        <FormItem fieldType={'string'} label='Title' dataIndex={'title'} required/>
+                        <FormItem fieldType={'string'} label='Title' dataIndex={'title'}/>
 
                         <FormItem fieldType={'select'} label='Categories' dataIndex={'category'}
-                                  fieldProps={{ options: categoryOptions }} required/>
+                                  fieldProps={{ options: categoryOptions }}/>
 
                         <FormItem fieldType={'select'} label='HTTP Status' dataIndex={'status'}
                                   fieldProps={{ options: statusOptions }} required/>
@@ -60,9 +61,9 @@ export const NewMock = () => {
                         <FormItem fieldType={'select'} label='Charset' dataIndex={'charset'}
                                   fieldProps={{ options: charsetTypeOptions }} required/>
 
-                        <FormItem fieldType={'object'} label='Header' dataIndex={'headers'} />
+                        <FormItem fieldType={'object'} label='Header' dataIndex={'headers'}/>
 
-                        <FormItem fieldType={'object'} label='Response' dataIndex={'response'} />
+                        <FormItem fieldType={'object'} label='Response' dataIndex={'response'}/>
 
                         <Button htmlType="submit"> Generate my HTTP Response </Button>
 
@@ -73,7 +74,7 @@ export const NewMock = () => {
                             onCancel={onModalCancelBtnClick}
                             onClose={onModalCancelBtnClick}
                         >
-                            <div> https://mockdoc.docker.local/mock/{updated._id} </div>
+                            <div> { MOCK_SERVICE_URL + updated._id } </div>
                         </Modal>
                     </Form>
                 </Card>
