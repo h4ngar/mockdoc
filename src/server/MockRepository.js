@@ -75,13 +75,16 @@ export class MockRepository {
     async updateMock(query, presenter) {
         let { _id, status, title, contentType, charset, headers, response, category } = query;
 
+        (typeof headers === 'undefined') ? headers = {} : JSON.parse(headers);
+        (typeof response === 'undefined') ? response = {} : JSON.parse(response);
+
         if (!_id) {
             _id = new mongoose.mongo.ObjectID()
         }
 
         let updated = await this.model.findOneAndUpdate(
             { _id },
-            { status, title, contentType, charset, headers: JSON.parse(headers), category, response: JSON.parse(response) },
+            { status, title, contentType, charset, headers, category, response },
             { new: true, upsert: true }
         );
 

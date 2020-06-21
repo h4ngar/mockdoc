@@ -12,7 +12,7 @@ const init = async () => {
         db: process.env.DB,
         user: process.env.USER,
         password: process.env.PASSWORD,
-        port: process.env.PORT,
+        port: process.env.PORT || 27017,
         options: {
             encrypt: true
         }
