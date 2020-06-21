@@ -62,9 +62,11 @@ export const EditMock = () => {
                     >
                         <Column title={'Url/Id'} dataIndex={'_id'} fieldType={'string'} fieldProps={{ disabled: true }}
                                 required renderer={onUrlRender}/>
-                        <Column title={'Title'} dataIndex={'title'} fieldType={'string'} required/>
+
+                        <Column title={'Title'} dataIndex={'title'} fieldType={'string'} />
+
                         <Column title={'Category'} dataIndex={'category'} fieldType={'select'} fieldProps={{ options: categoryOptions }}
-                                required hideInGrid/>
+                                hideInGrid/>
 
                         <Column title={'HTTP Status'} dataIndex={'status'} fieldType={'select'} fieldProps={{ options: statusOptions }}
                                 required hideInGrid/>
