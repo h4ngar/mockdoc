@@ -8,11 +8,11 @@ const init = async () => {
     Logger.info('server is initializing');
 
     const mongoConfig = {
-        server: process.env.SERVER,
-        db: process.env.DB,
-        user: process.env.USER,
-        password: process.env.PASSWORD,
-        port: process.env.PORT || 27017,
+        server: process.env.MONGO_SERVER,
+        db: process.env.MONGO_DATABASE,
+        user: process.env.MONGO_USER,
+        password: process.env.MONGO_PASSWORD,
+        port: process.env.MONGO_PORT || 27017,
         options: {
             encrypt: true
         }
