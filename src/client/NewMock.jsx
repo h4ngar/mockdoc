@@ -12,7 +12,7 @@ export const NewMock = () => {
     const updated = mockStore.getUpdatedRecords();
     const categoriesRecords = categoriesStore.getRecords();
     const categoryOptions = getCategoryOptions(categoriesRecords[0].list);
-    const MOCK_SERVICE_URL = (window.location.protocol + window.location.hostname + '/mock/');
+    const MOCK_SERVICE_URL = `${window.location.protocol}//${window.location.hostname}/mock/`;
 
     useEffect(() => {
         categoriesStore.getProxy().read({})

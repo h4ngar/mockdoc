@@ -9,7 +9,7 @@ import { getCategoryOptions } from './helper';
 export const EditMock = () => {
     const { mockStore } = useStore('mockStore');
     const { categoriesStore } = useStore('categoriesStore');
-    const MOCK_SERVICE_URL = (window.location.protocol + window.location.hostname + '/mock/');
+    const MOCK_SERVICE_URL = `${window.location.protocol}//${window.location.hostname}/mock/`;
 
     useEffect(() => {
         categoriesStore.getProxy().read({})
