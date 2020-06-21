@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  mockdoc:
+    image: registry.garic.biz/skeletons/mockdoc:latest
+    container_name: mockdoc
+    restart: unless-stopped
+    environment:
+      SERVER: ${SERVER:?SERVER must be set}
+      PORT: ${PORT:?PORT must be set}
+      DB: ${DB:?DB must be set}
+      USER: ${USER:?USER must be set}
+      PASSWORD: ${PASSWORD:?PASSWORD must be set}
+
+volumes:
+  mongo-data:
+    driver: local

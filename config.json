@@ -1,0 +1,16 @@
+{
+  "logger": {
+    "logPrefix": "mockdoc",
+    "logLevel": "trace"
+  },
+  "database": {
+    "server": "mongo.garic.biz",
+    "db": "mocks",
+    "user": "mocks",
+    "password": ".1Mocks2!",
+    "port": 27017,
+    "options": {
+      "encrypt": true
+    }
+  }
+}
