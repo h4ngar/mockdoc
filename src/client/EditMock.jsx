@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { FormGrid, Column } from '@react-hangar/antd-components'
-import { Card, Col, Row } from 'antd';
+import { Card, Col, message, Row } from 'antd';
 import { useStore } from '@scripty/react-store';
 import { Search } from './Search';
 import { statusOptions, charsetTypeOptions, contentTypeOptions } from './options';
@@ -28,15 +28,34 @@ export const EditMock = () => {
     };
 
     const onSave = async (record) => {
-        await mockStore.getProxy().update({ ...record });
+        console.log(record.response, ' record.response <------------');
+        try {
+            const response = JSON.parse(record.response);
+            const headers = JSON.parse(record.headers);
+            record.response = response;
+            record.headers = headers;
+            await mockStore.getProxy().update({ ...record });
+            message.success('Mock saved!');
+        } catch (e) {
+            if (typeof record.response === 'object' && typeof record.response === 'object') {
+                await mockStore.getProxy().update({ ...record });
+                message.success('Mock saved!');
+            } else {
+                message.error('response and headers must be an object');
+            }
+        }
     };
 
     const onUrlRender = (data) => {
-        return getMockServiceUrl() + data.value;
+        return getMockServiceUrl(data.value);
     }
 
     const onSearchChange = async (e) => {
-        await mockStore.getProxy().search({query: e.target.value, ...pagination});
+        let value = e.target.value;
+        if (value.indexOf('http') !== -1) {
+            value = value.substring(value.indexOf('/mock/')+6, value.length);
+        }
+        await mockStore.getProxy().search({query: value, ...pagination});
     }
 
     const sizedContent = {

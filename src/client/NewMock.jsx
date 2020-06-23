@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Col, Modal, Row } from 'antd';
+import { Card, Col, message, Modal, Row } from 'antd';
 import { Form, FormItem, Button } from '@react-hangar/antd-components';
 import { useStore } from '@scripty/react-store';
 import { charsetTypeOptions, contentTypeOptions, statusOptions } from './options';
@@ -26,8 +26,16 @@ export const NewMock = () => {
     }
 
     const handleSubmit = async (data, form) => {
-        await mockStore.getProxy().update({ ...form });
-        setVisible(true);
+        try {
+            const response = JSON.parse(form.response);
+            const headers = JSON.parse(form.headers);
+            form.response = response;
+            form.headers = headers;
+            await mockStore.getProxy().update({ ...form });
+            setVisible(true);
+        } catch (e) {
+            message.error('response and headers must be an object');
+        }
     };
 
     const onModalOkBtnClick = () => {
@@ -73,7 +81,7 @@ export const NewMock = () => {
                             onCancel={onModalCancelBtnClick}
                             onClose={onModalCancelBtnClick}
                         >
-                            <div> { getMockServiceUrl() + updated._id } </div>
+                            <div> { getMockServiceUrl(updated._id) } </div>
                         </Modal>
                     </Form>
                 </Card>

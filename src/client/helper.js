@@ -7,11 +7,11 @@ export const getCategoryOptions = (list) => {
     })
 }
 
-export const getMockServiceUrl = () => {
-    let MOCK_SERVICE_URL = `${window.location.protocol}//${window.location.hostname}/mock/`;
+export const getMockServiceUrl = (_id) => {
+    let MOCK_SERVICE_URL = `${window.location.protocol}//${window.location.hostname}/mock/${_id}`;
 
     if (window.location.port) {
-        MOCK_SERVICE_URL = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/mock/`;
+        MOCK_SERVICE_URL = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/mock/${_id}`;
     }
 
     return MOCK_SERVICE_URL;

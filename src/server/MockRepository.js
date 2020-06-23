@@ -34,14 +34,31 @@ export class MockRepository {
             if (page !== 0) {
                 page = page - 1;
             }
+
+            let searchId = 'eeeeeeeeeeeeeeeeeeeeeeee';
+
+            if (searchQuery.length === 24) {
+                searchId = searchQuery;
+            }
+
             const response = await this.model
                 .find({
-                    $or: [{ title: { $regex: searchQuery, $options: 'i' } }, {
-                        category: {
-                            $regex: searchQuery,
-                            $options: 'i'
+                    $or: [
+                        {
+                            title: {
+                                $regex: searchQuery, $options: 'i'
+                            }
+                        },
+                        {
+                            category: {
+                                $regex: searchQuery,
+                                $options: 'i'
+                            }
+                        },
+                        {
+                            _id: searchId
                         }
-                    }]
+                    ]
                 })
                 .limit(results)
                 .skip(page * results);
@@ -74,9 +91,6 @@ export class MockRepository {
 
     async updateMock(query, presenter) {
         let { _id, status, title, contentType, charset, headers, response, category } = query;
-
-        (typeof headers === 'undefined') ? headers = {} : JSON.parse(headers);
-        (typeof response === 'undefined') ? response = {} : JSON.parse(response);
 
         if (!_id) {
             _id = new mongoose.mongo.ObjectID()
