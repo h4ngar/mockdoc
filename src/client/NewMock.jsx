@@ -3,7 +3,7 @@ import { Card, Col, Modal, Row } from 'antd';
 import { Form, FormItem, Button } from '@react-hangar/antd-components';
 import { useStore } from '@scripty/react-store';
 import { charsetTypeOptions, contentTypeOptions, statusOptions } from './options';
-import { getCategoryOptions } from './helper'
+import { getCategoryOptions, getMockServiceUrl } from './helper'
 
 export const NewMock = () => {
     const { mockStore } = useStore('mockStore');
@@ -12,7 +12,6 @@ export const NewMock = () => {
     const updated = mockStore.getUpdatedRecords();
     const categoriesRecords = categoriesStore.getRecords();
     const categoryOptions = getCategoryOptions(categoriesRecords[0].list);
-    const MOCK_SERVICE_URL = `${window.location.protocol}//${window.location.hostname}/mock/`;
 
     useEffect(() => {
         categoriesStore.getProxy().read({})
@@ -55,7 +54,7 @@ export const NewMock = () => {
                         <FormItem fieldType={'select'} label='HTTP Status' dataIndex={'status'}
                                   fieldProps={{ options: statusOptions }} required/>
 
-                        <FormItem fieldType={'select'} label='Response ContentType' dataIndex={'contentType'}
+                        <FormItem fieldType={'select'} label='ContentType' dataIndex={'contentType'}
                                   fieldProps={{ options: contentTypeOptions }} required/>
 
                         <FormItem fieldType={'select'} label='Charset' dataIndex={'charset'}
@@ -74,7 +73,7 @@ export const NewMock = () => {
                             onCancel={onModalCancelBtnClick}
                             onClose={onModalCancelBtnClick}
                         >
-                            <div> { MOCK_SERVICE_URL + updated._id } </div>
+                            <div> { getMockServiceUrl() + updated._id } </div>
                         </Modal>
                     </Form>
                 </Card>

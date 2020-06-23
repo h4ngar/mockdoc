@@ -5,6 +5,7 @@ import { MockSchema } from './MockSchema';
 export class MockController {
 
     init(server, router) {
+        console.log('MockController')
         router.post('/search', this.searchMockAction);
         router.get('/read', this.readMockAction);
         router.post('/update', this.updateMockAction);
@@ -26,6 +27,7 @@ export class MockController {
     }
 
     readMockAction(req, res) {
+        console.log('readMockAction')
         const presenter = new MockPresenter(res);
         const repository = new MockRepository(MockSchema);
         return repository.readMock(req.query, presenter)

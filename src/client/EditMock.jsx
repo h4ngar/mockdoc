@@ -4,12 +4,11 @@ import { Card, Col, Row } from 'antd';
 import { useStore } from '@scripty/react-store';
 import { Search } from './Search';
 import { statusOptions, charsetTypeOptions, contentTypeOptions } from './options';
-import { getCategoryOptions } from './helper';
+import { getCategoryOptions, getMockServiceUrl } from './helper';
 
 export const EditMock = () => {
     const { mockStore } = useStore('mockStore');
     const { categoriesStore } = useStore('categoriesStore');
-    const MOCK_SERVICE_URL = `${window.location.protocol}//${window.location.hostname}/mock/`;
 
     useEffect(() => {
         categoriesStore.getProxy().read({})
@@ -33,7 +32,7 @@ export const EditMock = () => {
     };
 
     const onUrlRender = (data) => {
-        return MOCK_SERVICE_URL + data.value;
+        return getMockServiceUrl() + data.value;
     }
 
     const onSearchChange = async (e) => {
@@ -71,7 +70,7 @@ export const EditMock = () => {
                         <Column title={'HTTP Status'} dataIndex={'status'} fieldType={'select'} fieldProps={{ options: statusOptions }}
                                 required hideInGrid/>
 
-                        <Column fieldType={'select'} title='Response ContentType' dataIndex={'contentType'}
+                        <Column fieldType={'select'} title='ContentType' dataIndex={'contentType'}
                                 fieldProps={{ options: contentTypeOptions }} required hideInGrid/>
 
                         <Column fieldType={'select'} title='Charset' dataIndex={'charset'} fieldProps={{ options: charsetTypeOptions }}

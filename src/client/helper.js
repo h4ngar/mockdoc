@@ -6,3 +6,13 @@ export const getCategoryOptions = (list) => {
         }
     })
 }
+
+export const getMockServiceUrl = () => {
+    let MOCK_SERVICE_URL = `${window.location.protocol}//${window.location.hostname}/mock/`;
+
+    if (window.location.port) {
+        MOCK_SERVICE_URL = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/mock/`;
+    }
+
+    return MOCK_SERVICE_URL;
+}

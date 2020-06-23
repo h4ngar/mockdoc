@@ -23,9 +23,9 @@ const init = async () => {
     const templateConfig = {
         title: 'mockdoc'
     };
-    await app.addController(new IndexController(templateConfig));
     await app.addController(new CategoriesController());
     await app.addController(new MockController());
+    await app.addController(new IndexController(templateConfig));
     app.start();
 };
 

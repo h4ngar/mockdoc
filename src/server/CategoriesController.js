@@ -5,12 +5,14 @@ import { CategoriesPresenter } from './CategoriesPresenter';
 export class CategoriesController {
 
     init(server, router) {
+        console.log('MockController')
         router.get('/categories/read', this.readAction);
         router.post('/categories/update', this.updateAction);
         server.use(router);
     }
 
     readAction(req, res) {
+        console.log('readAction')
         const presenter = new CategoriesPresenter(res);
         const repository = new CategoriesRepository(CategoriesSchema);
         return repository.read(req.query, presenter)
