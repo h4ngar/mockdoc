@@ -84,7 +84,7 @@ export const EditMock = () => {
                         <Column title={'Title'} dataIndex={'title'} fieldType={'string'} />
 
                         <Column title={'Category'} dataIndex={'category'} fieldType={'select'} fieldProps={{ options: categoryOptions }}
-                                hideInGrid/>
+                                />
 
                         <Column title={'HTTP Status'} dataIndex={'status'} fieldType={'select'} fieldProps={{ options: statusOptions }}
                                 required hideInGrid/>
