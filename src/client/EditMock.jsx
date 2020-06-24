@@ -28,7 +28,6 @@ export const EditMock = () => {
     };
 
     const onSave = async (record) => {
-        console.log(record.response, ' record.response <------------');
         try {
             const response = JSON.parse(record.response);
             const headers = JSON.parse(record.headers);
