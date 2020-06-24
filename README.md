@@ -35,6 +35,8 @@ MONGO_PORT        |  Mongodb Port           | 27017
 MONGO_AUTH        |  Authentication enabled | true
 
 # Tool
+The tool will generate a mock url:
+https://localhost:3000/mock/5eef767754b2a300bfa9de08
 
 ![alt text](./screeshot.jpg "Hangar")
 
@@ -47,8 +49,7 @@ $ curl https://localhost:3000/mock/5eef767754b2a300bfa9de08
 {"banner":[{"banner":"mock-doc-banner.jpg"}]}
 ```
 
-# Quick Mock Edit
+#### Quick Edit
 If you want edit your mock quickly without searching it in the database, just add "edit" at the end of the url and open it in your browser. The edit form for your mock will be opend in the tool.
 
-##### Example
 https://localhost:3000/mock/5eef767754b2a300bfa9de08/edit
