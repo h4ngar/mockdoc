@@ -35,10 +35,11 @@ MONGO_PORT        |  Mongodb Port           | 27017
 MONGO_AUTH        |  Authentication enabled | true
 
 # Tool
-The tool will generate a mock url:
-https://localhost:3000/mock/5eef767754b2a300bfa9de08
 
 ![alt text](./screeshot.jpg "Hangar")
+
+After saving the form the tool generates a mock url:
+https://localhost:3000/mock/5eef767754b2a300bfa9de08
 
 # Usage
 
