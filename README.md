@@ -19,6 +19,7 @@ $ docker run -it --rm \
     -e MONGO_USER="user" \
     -e MONGO_PASSWORD="fairly long password" \
     -e MONGO_PORT="27017" \
+    -e MONGO_AUTH="true" \
     mockdoc
 ```
 
@@ -31,6 +32,7 @@ MONGO_DATABASE    |  Mongodb Database Name  |
 MONGO_USER        |  Mongodb Username       |
 MONGO_PASSWORD    |  Mongodb Password       |
 MONGO_PORT        |  Mongodb Port           | 27017
+MONGO_AUTH        |  Mongodb Port           | true
 
 # Tool
 
