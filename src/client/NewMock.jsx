@@ -81,7 +81,7 @@ export const NewMock = (props) => {
 
                         <FormItem fieldType={'object'} label='Response' dataIndex={'response'}/>
 
-                        <Button htmlType="submit"> Generate my HTTP Response </Button>
+                        <Button htmlType="submit" icon={'save'}> Save </Button>
 
                         <Modal
                             title={'Mock is ready:'}
