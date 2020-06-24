@@ -38,7 +38,7 @@ MONGO_AUTH        |  Authentication enabled | true
 
 ![alt text](./screeshot.jpg "Hangar")
 
-After saving the form the tool generates a mock url:
+The tool generates a mock url:
 https://localhost:3000/mock/5eef767754b2a300bfa9de08
 
 # Usage
@@ -52,5 +52,4 @@ $ curl https://localhost:3000/mock/5eef767754b2a300bfa9de08
 
 #### Quick Edit
 If you want edit your mock quickly without searching it in the database, just add "edit" at the end of the url and open it in your browser. The edit form for your mock will be opend in the tool.
-
 https://localhost:3000/mock/5eef767754b2a300bfa9de08/edit
