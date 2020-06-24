@@ -90,7 +90,7 @@ export class MockRepository {
     };
 
     async updateMock(query, presenter) {
-        let { _id, status, title, contentType, charset, headers, response, category } = query;
+        let { _id, status, title, contentType, charset, headers = '', response = '', category } = query;
 
         if (!_id) {
             _id = new mongoose.mongo.ObjectID()

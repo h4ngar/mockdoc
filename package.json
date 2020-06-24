@@ -1,6 +1,6 @@
 {
   "name": "@scripty/mockdoc",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "Danijel Garic",
   "license": "MIT",
   "description": "",
@@ -11,7 +11,7 @@
   "extension": "js",
   "jsnext:main": "src/client/index.jsx",
   "main": "lib/client/index.js",
-  "repository": "scripty/mockdoc",
+  "repository": "https://github.com/h4ngar/mockdoc",
   "scripts": {
     "webpack": "node node_modules/webpack/bin/webpack.js --config webpack.config.cjs",
     "start": "nodemon --no-warnings --es-module-specifier-resolution=node ./examples/server/server.js",

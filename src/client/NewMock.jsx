@@ -4,8 +4,9 @@ import { Form, FormItem, Button } from '@react-hangar/antd-components';
 import { useStore } from '@scripty/react-store';
 import { charsetTypeOptions, contentTypeOptions, statusOptions } from './options';
 import { getCategoryOptions, getMockServiceUrl } from './helper'
+import { useParams } from 'react-router';
 
-export const NewMock = () => {
+export const NewMock = (props) => {
     const { mockStore } = useStore('mockStore');
     const { categoriesStore } = useStore('categoriesStore');
     const [visible, setVisible] = useState(false);
@@ -13,6 +14,14 @@ export const NewMock = () => {
     const categoriesRecords = categoriesStore.getRecords();
     const categoryOptions = getCategoryOptions(categoriesRecords[0].list);
     const { Text } = Typography;
+    const records = mockStore.getRecords();
+    const params = useParams();
+
+    useEffect(() => {
+        if (params._id) {
+            mockStore.getProxy().search({ query: params._id })
+        }
+    }, []);
 
     useEffect(() => {
         categoriesStore.getProxy().read({})
@@ -53,7 +62,7 @@ export const NewMock = () => {
         <Row>
             <Col {...sizedContent} >
                 <Card title={'Design Mock'}>
-                    <Form onSubmit={handleSubmit} record={initialRecord}>
+                    <Form onSubmit={handleSubmit} record={(params._id && records < 1) ? records[0] : initialRecord}>
                         <FormItem fieldType={'string'} label='Title' dataIndex={'title'}/>
 
                         <FormItem fieldType={'select'} label='Categories' dataIndex={'category'}

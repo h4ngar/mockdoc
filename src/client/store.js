@@ -5,10 +5,10 @@ export default createStore({
     model: {
         _id: null,
         status: 200,
-        contentType: '',
-        charset: '',
-        headers: {},
-        response: {},
+        contentType: 'application/json',
+        charset: 'UTF-8',
+        headers: '',
+        response: '',
     },
     proxy: {
         rootProperty: 'entries',

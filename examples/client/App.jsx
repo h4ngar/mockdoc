@@ -7,7 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { StoreProvider } from '@scripty/react-store';
 import mockStore from '../../src/client/store';
 import categoriesStore from '../../src/client/categoriesStore';
-import { Route } from 'react-router';
+import { Route, Switch } from 'react-router';
 import { Categories } from '../../src/client/Categories';
 import { NewMock } from '../../src/client/NewMock';
 import { EditMock } from '../../src/client/EditMock';
@@ -54,6 +54,7 @@ const App = () => {
                         logo={<Logo to={'/'} image={'/files/logo-light.png'} version={'v1.0.0'}>MockDoc</Logo>}
                     />
                     <Route exact path={'/'} component={NewMock}/>
+                    <Route path={'/mock/:_id/edit'}><NewMock/></Route>
                     <Route exact path={'/edit'} component={EditMock}/>
                     <Route path={'/categories'} component={Categories}/>
 
