@@ -29,7 +29,9 @@ export const EditMock = () => {
 
     const onSave = async (record) => {
         try {
-            record.headers = JSON.parse(record.headers);
+            if (record.headers) {
+                record.headers = JSON.parse(record.headers);
+            }
             await mockStore.getProxy().update({ ...record });
             message.success('Mock saved!');
         } catch (e) {
