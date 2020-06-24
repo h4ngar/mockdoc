@@ -62,7 +62,7 @@ export const NewMock = (props) => {
         <Row>
             <Col {...sizedContent} >
                 <Card title={'Design Mock'}>
-                    <Form onSubmit={handleSubmit} record={(params._id && records < 1) ? records[0] : initialRecord}>
+                    <Form onSubmit={handleSubmit} record={(params._id && records.length === 1) ? records[0] : initialRecord}>
                         <FormItem fieldType={'string'} label='Title' dataIndex={'title'}/>
 
                         <FormItem fieldType={'select'} label='Categories' dataIndex={'category'}
