@@ -32,7 +32,7 @@ MONGO_DATABASE    |  Mongodb Database Name  |
 MONGO_USER        |  Mongodb Username       |
 MONGO_PASSWORD    |  Mongodb Password       |
 MONGO_PORT        |  Mongodb Port           | 27017
-MONGO_AUTH        |  Mongodb Port           | true
+MONGO_AUTH        |  Authentication enabled | true
 
 # Tool
 
