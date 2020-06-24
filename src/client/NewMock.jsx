@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Col, message, Modal, Row } from 'antd';
+import { Card, Col, message, Modal, Row, Typography } from 'antd';
 import { Form, FormItem, Button } from '@react-hangar/antd-components';
 import { useStore } from '@scripty/react-store';
 import { charsetTypeOptions, contentTypeOptions, statusOptions } from './options';
@@ -12,6 +12,7 @@ export const NewMock = () => {
     const updated = mockStore.getUpdatedRecords();
     const categoriesRecords = categoriesStore.getRecords();
     const categoryOptions = getCategoryOptions(categoriesRecords[0].list);
+    const { Text } = Typography;
 
     useEffect(() => {
         categoriesStore.getProxy().read({})
@@ -27,14 +28,13 @@ export const NewMock = () => {
 
     const handleSubmit = async (data, form) => {
         try {
-            const response = JSON.parse(form.response);
-            const headers = JSON.parse(form.headers);
-            form.response = response;
-            form.headers = headers;
+            if (form.headers) {
+                form.headers = JSON.parse(form.headers);
+            }
             await mockStore.getProxy().update({ ...form });
             setVisible(true);
         } catch (e) {
-            message.error('response and headers must be an object');
+            message.error('headers must be an object');
         }
     };
 
@@ -77,11 +77,14 @@ export const NewMock = () => {
                         <Modal
                             title={'Mock is ready:'}
                             visible={visible}
+                            width={600}
                             onOk={onModalOkBtnClick}
                             onCancel={onModalCancelBtnClick}
                             onClose={onModalCancelBtnClick}
                         >
-                            <div> { getMockServiceUrl(updated._id) } </div>
+                            <Text style={{ fontSize: 18 }} copyable code>
+                                {getMockServiceUrl(updated._id)}
+                            </Text>
                         </Modal>
                     </Form>
                 </Card>

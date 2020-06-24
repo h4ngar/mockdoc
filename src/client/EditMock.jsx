@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { FormGrid, Column } from '@react-hangar/antd-components'
-import { Card, Col, message, Row } from 'antd';
+import { Card, Col, message, Row, Typography} from 'antd';
 import { useStore } from '@scripty/react-store';
 import { Search } from './Search';
 import { statusOptions, charsetTypeOptions, contentTypeOptions } from './options';
@@ -9,6 +9,11 @@ import { getCategoryOptions, getMockServiceUrl } from './helper';
 export const EditMock = () => {
     const { mockStore } = useStore('mockStore');
     const { categoriesStore } = useStore('categoriesStore');
+    const records = mockStore.getRecords();
+    const pagination = mockStore.getPagination();
+    const categoriesRecords = categoriesStore.getRecords();
+    const categoryOptions = getCategoryOptions(categoriesRecords[0].list);
+    const { Text } = Typography;
 
     useEffect(() => {
         categoriesStore.getProxy().read({})
@@ -18,35 +23,31 @@ export const EditMock = () => {
         mockStore.getProxy().read({current: 1, results: 10})
     }, [categoriesStore]);
 
-    const records = mockStore.getRecords();
-    const pagination = mockStore.getPagination();
-    const categoriesRecords = categoriesStore.getRecords();
-    const categoryOptions = getCategoryOptions(categoriesRecords[0].list);
-
     const onDelete = async (ids) => {
         await mockStore.getProxy().destroy(ids);
     };
 
     const onSave = async (record) => {
         try {
-            const response = JSON.parse(record.response);
-            const headers = JSON.parse(record.headers);
-            record.response = response;
-            record.headers = headers;
+            record.headers = JSON.parse(record.headers);
             await mockStore.getProxy().update({ ...record });
             message.success('Mock saved!');
         } catch (e) {
-            if (typeof record.response === 'object' && typeof record.response === 'object') {
+            if (typeof record.headers === 'object') {
                 await mockStore.getProxy().update({ ...record });
                 message.success('Mock saved!');
             } else {
-                message.error('response and headers must be an object');
+                message.error('headers must be an object');
             }
         }
     };
 
     const onUrlRender = (data) => {
-        return getMockServiceUrl(data.value);
+        return (
+            <Text style={{ fontSize: 18 }} copyable code>
+                {getMockServiceUrl(data.value)}
+            </Text>
+        )
     }
 
     const onSearchChange = async (e) => {
