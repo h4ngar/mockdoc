@@ -13,7 +13,7 @@ const init = async () => {
         user: process.env.MONGO_USER,
         password: process.env.MONGO_PASSWORD,
         port: process.env.MONGO_PORT || 27017,
-        auth: process.env.MONGO_AUTH || true,
+        auth: process.env.MONGO_AUTH || 'true',
         options: {
             encrypt: true
         }

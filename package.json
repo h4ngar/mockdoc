@@ -21,7 +21,7 @@
   "dependencies": {
     "@react-hangar/antd-components": "0.5.2",
     "@scripty/logger": "^0.1.0",
-    "@scripty/mongo": "^0.5.0",
+    "@scripty/mongo": "^0.6.0",
     "@scripty/server": "^0.1.0",
     "@scripty/react-store": "^0.3.0",
     "antd": "3.23.4",
