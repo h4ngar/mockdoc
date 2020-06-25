@@ -92,7 +92,7 @@ export const NewMock = (props) => {
                             onClose={onModalCancelBtnClick}
                         >
                             <Text style={{ fontSize: 18 }} copyable code>
-                                {getMockServiceUrl(updated._id)}
+                                {getMockServiceUrl((updated) ? updated._id : '')}
                             </Text>
                         </Modal>
                     </Form>
