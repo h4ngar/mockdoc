@@ -5,5 +5,6 @@ export const MockSchema = {
     headers: Object,
     response: Object,
     category: String,
-    title: String
+    title: String,
+    path: Object
 };

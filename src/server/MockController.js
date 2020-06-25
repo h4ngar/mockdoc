@@ -9,14 +9,14 @@ export class MockController {
         router.get('/read', this.readMockAction);
         router.post('/update', this.updateMockAction);
         router.post('/destroy', this.destroyMockAction);
-        router.get('/mock/:_id', this.findMockAction);
+        router.get('/mock/*', this.findMockAction);
         server.use(router);
     }
 
     findMockAction(req, res) {
         const presenter = new MockPresenter(res);
         const repository = new MockRepository(MockSchema);
-        return repository.findMock(req.params, presenter)
+        return repository.findMock(req, presenter)
     }
 
     searchMockAction(req, res) {

@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { FormGrid, Column } from '@react-hangar/antd-components'
-import { Card, Col, message, Row, Typography} from 'antd';
+import { Card, Col, Divider, message, Row, Typography } from 'antd';
 import { useStore } from '@scripty/react-store';
 import { Search } from './Search';
 import { statusOptions, charsetTypeOptions, contentTypeOptions } from './options';
 import { getCategoryOptions, getMockServiceUrl } from './helper';
+import { EditPath, Path } from './Path';
 
 export const EditMock = () => {
     const { mockStore } = useStore('mockStore');
@@ -45,11 +46,15 @@ export const EditMock = () => {
     };
 
     const onUrlRender = (data) => {
-        return (
-            <Text style={{ fontSize: 18 }} copyable code>
-                {getMockServiceUrl(data.value)}
-            </Text>
-        )
+        if (data.value) {
+            return (
+                <div style={{padding: '0 5px' }}>
+                    <Text style={{ fontSize: 13}} copyable code>
+                        {getMockServiceUrl(data.value.path)}
+                    </Text>
+                </div>
+            )
+        }
     }
 
     const onSearchChange = async (e) => {
@@ -73,6 +78,7 @@ export const EditMock = () => {
             <Col {...sizedContent} >
                 <Card title={'Edit Mocks'} extra={<Search onChange={onSearchChange} key={1}/>}>
                     <FormGrid
+                        scroll={{ x: 'calc(700px + 50%)'}}
                         dataSource={records}
                         pagination={pagination}
                         onChange={onChange}
@@ -80,13 +86,15 @@ export const EditMock = () => {
                         onSave={onSave}
                         idProperty={'_id'}
                     >
-                        <Column title={'Url/Id'} dataIndex={'_id'} fieldType={'string'} fieldProps={{ disabled: true }}
-                                required renderer={onUrlRender}/>
 
-                        <Column title={'Title'} dataIndex={'title'} fieldType={'string'} />
+                        <Column title={'Title'} dataIndex={'title'} fieldType={'string'}/>
 
-                        <Column title={'Category'} dataIndex={'category'} fieldType={'select'} fieldProps={{ options: categoryOptions }}
-                                />
+                        <Column title={'Category'} dataIndex={'category'} fieldType={'select'} fieldProps={{ options: categoryOptions }}/>
+
+                        <Column title={'Path'} dataIndex={'path'} fieldProps={{fixed: 'right'}}
+                                required renderer={onUrlRender}>
+                            <EditPath />
+                        </Column>
 
                         <Column title={'HTTP Status'} dataIndex={'status'} fieldType={'select'} fieldProps={{ options: statusOptions }}
                                 required hideInGrid/>
@@ -97,8 +105,8 @@ export const EditMock = () => {
                         <Column fieldType={'select'} title='Charset' dataIndex={'charset'} fieldProps={{ options: charsetTypeOptions }}
                                 required hideInGrid/>
 
-                        <Column title={'HTTP Headers'} dataIndex={'headers'} fieldType={'object'} />
-                        <Column title={'HTTP Response'} dataIndex={'response'} fieldType={'object'} />
+                        <Column title={'Response Headers'} dataIndex={'headers'} fieldType={'object'} />
+                        <Column title={'Response Body'} dataIndex={'response'} fieldType={'object'} />
                     </FormGrid>
                 </Card>
             </Col>

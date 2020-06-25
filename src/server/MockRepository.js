@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { MOCK_FIND, MOCK_UPDATE, MOCK_READ, MOCK_SEARCH } from './Constants';
+import { MOCK_FIND, MOCK_READ, MOCK_SEARCH } from './Constants';
 import { Logger } from '@scripty/logger';
 
 export class MockRepository {
@@ -10,9 +10,27 @@ export class MockRepository {
         this.model = mongoose.model('mocks', Schema);
     }
 
-    async findMock(query, presenter) {
-        let response = await this.model.findOne({ _id: query._id });
-        return presenter.present({ code: MOCK_FIND, response });
+    convertQuery = (query) => {
+        let queryString = '';
+        Object.keys(query).forEach((key, idx) => {
+            queryString += `${key}=${query[key]}&`;
+        })
+        return queryString.substring(0, queryString.length -1);
+    }
+
+    async findMock(req, presenter) {
+        let params = req.params[0];
+        let needle = '';
+
+        if (req.query) {
+            let query = this.convertQuery(req.query);
+            needle = `${needle}?${query}`;
+        }
+
+        let path = `/${params + needle}`
+
+        let response = await this.model.find({ "path.path": path });
+        return presenter.present({ code: MOCK_FIND, response: response[0] });
     };
 
     async searchMock(query, presenter) {
@@ -90,7 +108,7 @@ export class MockRepository {
     };
 
     async updateMock(query, presenter) {
-        let { _id, status, title, contentType, charset, headers = '', response = '', category } = query;
+        let { _id, status, title, contentType, charset, headers = '', response = '', category, path='' } = query;
 
         if (!_id) {
             _id = new mongoose.mongo.ObjectID()
@@ -98,7 +116,7 @@ export class MockRepository {
 
         let updated = await this.model.findOneAndUpdate(
             { _id },
-            { status, title, contentType, charset, headers, category, response },
+            { status, title, contentType, charset, headers, category, response, path },
             { new: true, upsert: true }
         );
 
