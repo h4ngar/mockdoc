@@ -1,4 +1,5 @@
 import { MOCK_UPDATE, MOCK_READ, MOCK_FIND, MOCK_SEARCH } from './Constants';
+import { urlParamsToObject } from '../helper';
 
 export class MockPresenter {
     constructor(response) {
@@ -38,6 +39,7 @@ export class MockPresenter {
                 break;
 
             case MOCK_SEARCH:
+                response[0]._doc.requestBody = urlParamsToObject(response[0]._doc.requestBody)
                 this.response.send({
                     entries: response,
                     pagination: {

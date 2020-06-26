@@ -10,6 +10,7 @@ export class MockController {
         router.post('/update', this.updateMockAction);
         router.post('/destroy', this.destroyMockAction);
         router.get('/mock/*', this.findMockAction);
+        router.post('/mock/*', this.findMockAction);
         server.use(router);
     }
 

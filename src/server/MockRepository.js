@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { MOCK_FIND, MOCK_READ, MOCK_SEARCH } from './Constants';
 import { Logger } from '@scripty/logger';
-import { getQueryParamsString, encodeResponseByContentType, hasQueryParams } from './helper';
+import { objectToUrlParams, encodeResponseByContentType, hasQueryParams, hasBodyParams } from '../helper';
 
 export class MockRepository {
 
@@ -13,12 +13,19 @@ export class MockRepository {
 
     async findMock(req, presenter) {
         let path = req.params[0];
+        let bodyParams = '';
 
-        if (hasQueryParams(req)) {
-            path = path + getQueryParamsString(req.query);
+        if (hasBodyParams(req)) {
+            bodyParams = req.body;
         }
 
-        let result = await this.model.findOne({ 'path.path': `/${path}` });
+        if (hasQueryParams(req)) {
+            path = path + '?' + objectToUrlParams(req.query);
+        }
+
+        let result = await this.model.findOne({ 'path.path': `/${path}`, requestBody: objectToUrlParams(bodyParams) });
+
+        console.log(result, ' result ---------------------- ');
 
         try {
             result.response = encodeResponseByContentType(result.contentType, result.response);
@@ -96,7 +103,7 @@ export class MockRepository {
     };
 
     async updateMock(body, presenter) {
-        let { _id, status, title, contentType, charset, headers = '', category, response, path = '' } = body;
+        let { _id, status, title, contentType, charset, headers = '', category, response, path = '', requestHeaders = '', requestBody = '' } = body;
 
         if (!_id) {
             _id = new mongoose.mongo.ObjectID()
@@ -104,7 +111,18 @@ export class MockRepository {
 
         let updated = await this.model.findOneAndUpdate(
             { _id },
-            { status, title, contentType, charset, headers, category, response, path },
+            {
+                status,
+                title,
+                contentType,
+                charset,
+                headers,
+                category,
+                response,
+                path,
+                requestHeaders: JSON.stringify(requestHeaders),
+                requestBody: objectToUrlParams(requestBody)
+            },
             { new: true, upsert: true }
         );
 
