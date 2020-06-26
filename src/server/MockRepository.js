@@ -32,6 +32,7 @@ export class MockRepository {
         try {
             const searchQuery = query.query;
             const path = '/' + searchQuery.substring(searchQuery.indexOf('/mock/'), searchQuery.length);
+
             const mongooseQuery = [
                 {
                     title: {

@@ -54,7 +54,7 @@ const App = () => {
                         logo={<Logo to={'/'} image={'/files/logo-light.png'} version={'v1.0.0'}>MockDoc</Logo>}
                     />
                     <Route exact path={'/'} component={NewMock}/>
-                    <Route path={'/mock/:_id/edit'}><NewMock/></Route>
+                    <Route path={'/mock-edit/*'}><NewMock/></Route>
                     <Route exact path={'/edit'} component={EditMock}/>
                     <Route path={'/categories'} component={Categories}/>
 
