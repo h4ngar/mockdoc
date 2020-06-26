@@ -10,13 +10,13 @@ export class MockPresenter {
 
         switch (code) {
             case MOCK_FIND:
-                this.response.headers = response._doc.headers;
-                Object.keys(response._doc.headers).forEach((key) => {
-                    this.response.set({ [key]: response._doc.headers[key] });
+                this.response.headers = response.headers;
+                Object.keys(response.headers).forEach((key) => {
+                    this.response.set({ [key]: response.headers[key] });
                 });
-                this.response.set('Content-Type', `${response._doc.contentType};charset=${response._doc.charset}`);
-                this.response.status(response._doc.status);
-                this.response.json(response._doc.response);
+                this.response.set('Content-Type', `${response._doc.contentType};charset=${response.charset}`);
+                this.response.status(response.status);
+                this.response.json(response.response);
                 break;
 
             case MOCK_UPDATE:

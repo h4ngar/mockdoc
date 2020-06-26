@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { MOCK_FIND, MOCK_READ, MOCK_SEARCH } from './Constants';
 import { Logger } from '@scripty/logger';
+import { getQueryParamsString, encodeResponseByContentType, hasQueryParams } from './helper';
 
 export class MockRepository {
 
@@ -10,40 +11,48 @@ export class MockRepository {
         this.model = mongoose.model('mocks', Schema);
     }
 
-    convertQuery = (query) => {
-        let queryString = '';
-        Object.keys(query).forEach((key, idx) => {
-            queryString += `${key}=${query[key]}&`;
-        })
-        return queryString.substring(0, queryString.length -1);
-    }
-
     async findMock(req, presenter) {
-        let params = req.params[0];
-        let needle = '';
+        let path = req.params[0];
 
-        if (req.query) {
-            let query = this.convertQuery(req.query);
-            needle = `${needle}?${query}`;
+        if (hasQueryParams(req)) {
+            path = path + getQueryParamsString(req.query);
         }
 
-        let path = `/${params + needle}`
+        let result = await this.model.findOne({ 'path.path': `/${path}` });
 
-        let response = await this.model.find({ "path.path": path });
-        return presenter.present({ code: MOCK_FIND, response: response[0] });
+        try {
+            result.response = encodeResponseByContentType(result.contentType, result.response);
+            return presenter.present({ code: MOCK_FIND, response: result });
+        } catch (e) {
+            return presenter.present({ code: MOCK_FIND, response: result });
+        }
     };
 
     async searchMock(query, presenter) {
         try {
             const searchQuery = query.query;
+            const path = '/' + searchQuery.substring(searchQuery.indexOf('/mock/'), searchQuery.length);
+            const mongooseQuery = [
+                {
+                    title: {
+                        $regex: searchQuery,
+                        $options: 'i'
+                    }
+                },
+                {
+                    category: {
+                        $regex: searchQuery,
+                        $options: 'i'
+                    }
+                },
+                {
+                    'path.path': path
+                }
+            ];
+
             const total = await this.model.countDocuments(
                 {
-                    $or: [{ title: { $regex: searchQuery, $options: 'i' } }, {
-                        category: {
-                            $regex: searchQuery,
-                            $options: 'i'
-                        }
-                    }]
+                    $or: mongooseQuery
                 });
 
             let page = parseInt(query.current);
@@ -53,34 +62,12 @@ export class MockRepository {
                 page = page - 1;
             }
 
-            let searchId = 'eeeeeeeeeeeeeeeeeeeeeeee';
-
-            if (searchQuery.length === 24) {
-                searchId = searchQuery;
-            }
-
             const response = await this.model
                 .find({
-                    $or: [
-                        {
-                            title: {
-                                $regex: searchQuery, $options: 'i'
-                            }
-                        },
-                        {
-                            category: {
-                                $regex: searchQuery,
-                                $options: 'i'
-                            }
-                        },
-                        {
-                            _id: searchId
-                        }
-                    ]
+                    $or: mongooseQuery
                 })
                 .limit(results)
                 .skip(page * results);
-
             return presenter.present({ code: MOCK_SEARCH, total, response, page, results })
         } catch (e) {
             Logger.error(e)
@@ -107,8 +94,8 @@ export class MockRepository {
         }
     };
 
-    async updateMock(query, presenter) {
-        let { _id, status, title, contentType, charset, headers = '', response = '', category, path='' } = query;
+    async updateMock(body, presenter) {
+        let { _id, status, title, contentType, charset, headers = '', category, response, path = '' } = body;
 
         if (!_id) {
             _id = new mongoose.mongo.ObjectID()

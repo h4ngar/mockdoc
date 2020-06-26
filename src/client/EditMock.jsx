@@ -91,7 +91,7 @@ export const EditMock = () => {
 
                         <Column title={'Category'} dataIndex={'category'} fieldType={'select'} fieldProps={{ options: categoryOptions }}/>
 
-                        <Column title={'Path'} dataIndex={'path'} fieldProps={{fixed: 'right'}}
+                        <Column title={'Mock Url'} dataIndex={'path'} fieldProps={{fixed: 'right'}}
                                 required renderer={onUrlRender}>
                             <EditPath />
                         </Column>
