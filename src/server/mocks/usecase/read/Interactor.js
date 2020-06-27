@@ -7,7 +7,7 @@ export default class Interactor {
     }
 
     async run() {
-        const response = await this.repository.read({ current: 1, results: 10 });
+        const response = await this.repository.read(this.req.query);
         return await this.presenter.present({ ...response });
     }
 }
