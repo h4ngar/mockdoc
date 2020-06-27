@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { FormGrid, Column } from '@react-hangar/antd-components'
-import { Card, Col, Divider, message, Row, Typography } from 'antd';
+import { Badge, Card, Col, Divider, message, Row, Typography } from 'antd';
 import { useStore } from '@scripty/react-store';
 import { Search } from './Search';
 import { statusOptions, charsetTypeOptions, contentTypeOptions } from './options';
-import { getCategoryOptions, getMockServiceUrl } from './helper';
+import { getCategoryOptions, getMockServiceUrl } from '../helper';
 import { EditPath, Path } from './Path';
 
 export const EditMock = () => {
@@ -57,6 +57,19 @@ export const EditMock = () => {
         }
     }
 
+    const onRequestBodyRender = (data) => {
+        if (data.value !== '') {
+            return <Badge
+                count={'POST'}
+                style={{ backgroundColor: '#2f7438', color: '#fff', boxShadow: '0 0 0 1px #d9d9d9 inset' }}
+            />
+        }
+        return <Badge
+            count={'GET'}
+            style={{ backgroundColor: '#0e69b4', color: '#fff', boxShadow: '0 0 0 1px #d9d9d9 inset' }}
+        />
+    }
+
     const onSearchChange = async (e) => {
         let value = e.target.value;
         if (value.indexOf('http') !== -1) {
@@ -91,22 +104,29 @@ export const EditMock = () => {
 
                         <Column title={'Category'} dataIndex={'category'} fieldType={'select'} fieldProps={{ options: categoryOptions }}/>
 
-                        <Column title={'Mock Url'} dataIndex={'path'} fieldProps={{fixed: 'right'}}
+                        <Column title={'Mock Url'} dataIndex={'requestPath'} fieldProps={{fixed: 'right'}}
                                 required renderer={onUrlRender}>
                             <EditPath />
                         </Column>
 
-                        <Column title={'HTTP Status'} dataIndex={'status'} fieldType={'select'} fieldProps={{ options: statusOptions }}
+                        <Column title={'Request Headers'} dataIndex={'requestHeaders'} fieldType={'object'} hideInGrid/>
+
+
+                        <Column title={'Request Body'} dataIndex={'requestBody'} fieldType={'object'} renderer={onRequestBodyRender}
+                            fieldProps={{ title: ''}}
+                        />
+
+                        <Column title={'HTTP Status'} dataIndex={'responseStatus'} fieldType={'select'} fieldProps={{ options: statusOptions }}
                                 required hideInGrid/>
 
-                        <Column fieldType={'select'} title='ContentType' dataIndex={'contentType'}
+                        <Column fieldType={'select'} title='ContentType' dataIndex={'responseContentType'}
                                 fieldProps={{ options: contentTypeOptions }} required hideInGrid/>
 
-                        <Column fieldType={'select'} title='Charset' dataIndex={'charset'} fieldProps={{ options: charsetTypeOptions }}
+                        <Column fieldType={'select'} title='Charset' dataIndex={'responseCharset'} fieldProps={{ options: charsetTypeOptions }}
                                 required hideInGrid/>
 
-                        <Column title={'Response Headers'} dataIndex={'headers'} fieldType={'object'} />
-                        <Column title={'Response Body'} dataIndex={'response'} fieldType={'object'} />
+                        <Column title={'Response Headers'} dataIndex={'responseHeaders'} fieldType={'object'} />
+                        <Column title={'Response Body'} dataIndex={'responseBody'} fieldType={'object'} />
                     </FormGrid>
                 </Card>
             </Col>

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { CATEGORIES_READ } from './Constants';
+import { CATEGORIES_READ } from '../Constants';
 import { Logger } from '@scripty/logger';
 
 export class CategoriesRepository {

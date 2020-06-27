@@ -1,4 +1,4 @@
-import { CATEGORIES_READ } from './Constants';
+import { CATEGORIES_READ } from '../Constants';
 
 export class CategoriesPresenter {
     constructor(response) {
