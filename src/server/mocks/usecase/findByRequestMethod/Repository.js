@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import { Logger } from '@scripty/logger';
 import { BaseRepository } from '../../../BaseRepository';
 

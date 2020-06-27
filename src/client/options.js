@@ -32,10 +32,10 @@ export const contentTypeOptions = [
     //{ label: 'multipart/form-data', value: 'multipart/form-data' },
     //{ label: 'text/css', value: 'text/css' },
     //{ label: 'text/csv', value: 'text/csv' },
-    //{ label: 'text/html', value: 'text/html' },
+    { label: 'text/html', value: 'text/html' },
     //{ label: 'text/json', value: 'text/json' },
     { label: 'text/plain', value: 'text/plain' },
-    //{ label: 'text/xml', value: 'text/xml' }
+    { label: 'text/xml', value: 'text/xml' }
 ];
 
 export const charsetTypeOptions = [
