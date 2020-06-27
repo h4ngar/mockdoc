@@ -17,9 +17,7 @@ export default class Presenter {
 
         this.response.set('Content-Type', `${myResponse.responseContentType};charset=${myResponse.responseCharset}`);
         this.response.status(myResponse.responseStatus);
-        console.log(myResponse.responseContentType, ' myResponse.responseContentType ---------------------- ');
-        const bla = encodeResponseByContentType(myResponse.responseContentType, myResponse.responseBody);
-        console.log(bla, '  ---------------------- ');
-        return this.response.json(bla);
+        const result = encodeResponseByContentType(myResponse.responseContentType, myResponse.responseBody);
+        return this.response.json(result);
     };
 }

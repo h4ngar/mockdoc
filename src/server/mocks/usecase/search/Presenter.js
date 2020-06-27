@@ -6,7 +6,6 @@ export default class Presenter {
     }
 
     async present({ total, response, page, results }) {
-        console.log(response, ' response ---------------------- ');
         response[0]._doc.requestBody = urlParamsToObject(response[0]._doc.requestBody)
         this.response.send({
             entries: response,
