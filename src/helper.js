@@ -66,9 +66,10 @@ export const filterByHeaderData = (headers, result) => {
             if (collectedHeaders.length === Object.keys(parseRequestHeaders).length) {
                 return rec;
             }
-        }
 
-        return rec;
+        } else {
+            return rec;
+        }
     })
 
     return response;
