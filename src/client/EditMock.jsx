@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { FormGrid, Column } from '@react-hangar/antd-components'
-import { Badge, Card, Col, Divider, message, Row, Typography } from 'antd';
+import { Badge, Card, Col, Icon, message, Row, Typography } from 'antd';
 import { useStore } from '@scripty/react-store';
 import { Search } from './Search';
 import { statusOptions, charsetTypeOptions, contentTypeOptions } from './options';
 import { getCategoryOptions, getMockServiceUrl } from '../helper';
-import { EditPath, Path } from './Path';
+import { EditPath } from './Path';
+import { validate } from './validator';
 
 export const EditMock = () => {
     const { mockStore } = useStore('mockStore');
@@ -28,30 +29,32 @@ export const EditMock = () => {
         await mockStore.getProxy().destroy(ids);
     };
 
-    const onSave = async (record) => {
+    const update = async (form) => {
         try {
-            if (record.headers) {
-                record.headers = JSON.parse(record.headers);
-            }
-            await mockStore.getProxy().update({ ...record });
-            message.success('Mock saved!');
+            await mockStore.getProxy().update({ ...form });
         } catch (e) {
-            if (typeof record.headers === 'object') {
-                await mockStore.getProxy().update({ ...record });
-                message.success('Mock saved!');
-            } else {
-                message.error('headers must be an object');
-            }
+            message.error(e);
         }
+    }
+
+    const handleSubmit = async (form) => {
+        let validatedForm = validate(form);
+        if (typeof validatedForm === 'object') await update(validatedForm);
     };
 
     const onUrlRender = (data) => {
         if (data.value) {
+
+            const onOpenInNewTabClick = () => {
+                window.open(getMockServiceUrl(data.value.path),'_blank');
+            }
+
             return (
                 <div style={{padding: '0 5px' }}>
                     <Text style={{ fontSize: 13}} copyable code>
                         {getMockServiceUrl(data.value.path)}
                     </Text>
+                    <Icon title={'Open in new tab'} type="file-add" onClick={onOpenInNewTabClick} />
                 </div>
             )
         }
@@ -96,7 +99,7 @@ export const EditMock = () => {
                         pagination={pagination}
                         onChange={onChange}
                         onDelete={onDelete}
-                        onSave={onSave}
+                        onSave={handleSubmit}
                         idProperty={'_id'}
                     >
 

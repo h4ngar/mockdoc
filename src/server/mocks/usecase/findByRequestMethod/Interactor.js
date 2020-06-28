@@ -47,6 +47,10 @@ export default class Interactor {
             const path = this.req.params[0];
             const headers = this.req.headers;
             const body = JSON.stringify(this.req.body);
+
+            console.log(path, ' path ---------------------- ');
+            console.log(body, ' body ---------------------- ');
+
             const result = await this.repository.findPost({ path, body });
             const response = filterByHeaderData(headers, result);
             return this.presenter.present({response});
