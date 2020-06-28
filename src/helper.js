@@ -8,6 +8,10 @@ export const encodeResponseByContentType = (contentType, response) => {
             }
         case 'text/plain':
             return response
+        case 'text/html':
+            return response
+        case 'text/xml':
+            return response
     }
 }
 
@@ -44,8 +48,30 @@ export const hasQueryAndUrlParams = (req) => {
 }
 
 export const filterByHeaderData = (headers, result) => {
-    //toDo implement logic to filter by given header
-    return result;
+
+    let collectedHeaders = [];
+
+    const response = result.map((rec) => {
+
+        if (rec.requestHeaders) {
+            let parseRequestHeaders = JSON.parse(rec.requestHeaders);
+            Object.keys(headers).forEach((key) => {
+                if (typeof parseRequestHeaders[key] !== 'undefined') {
+                    if (parseRequestHeaders[key] === headers[key]) {
+                        collectedHeaders.push({[key]: parseRequestHeaders[key]})
+                    }
+                }
+            });
+
+            if (collectedHeaders.length === Object.keys(parseRequestHeaders).length) {
+                return rec;
+            }
+        }
+
+        return rec;
+    })
+
+    return response;
 }
 
 export const getCategoryOptions = (list) => {
