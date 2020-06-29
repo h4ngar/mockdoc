@@ -17,39 +17,61 @@ export default class Interactor {
     async run() {
 
         if (hasBodyAndQueryAndUrlParams(this.req)) {
-            const path = this.req.params[0];
-            const query = objectToUrlParams(this.req.query);
-            const body = JSON.stringify(this.req.body);
-            const headers = this.req.headers;
-            const result = await this.repository.findPostAndUrlParams({ path, query, body });
-            const response = filterByHeaderData(headers, result);
-            return this.presenter.present({response});
+            const result = await this.repository.findPostAndUrlParams({
+                path: this.getPath(),
+                query: this.getQuery(),
+                body: this.getBody()
+            });
+
+            this.validateResult(result);
+            const response = filterByHeaderData(this.getHeaders(), result);
+            return this.presenter.present({ response });
         }
 
         if (hasQueryAndUrlParams(this.req)) {
-            const path = this.req.params[0];
-            const query = objectToUrlParams(this.req.query);
-            const headers = this.req.headers;
-            const result = await this.repository.findGetAndUrlParams({ path, query });
-            const response = filterByHeaderData(headers, result);
-            return this.presenter.present({response});
+            const result = await this.repository.findGetAndUrlParams({ path: this.getPath(), query: this.getQuery() });
+            this.validateResult(result);
+            const response = filterByHeaderData(this.getHeaders(), result);
+            return this.presenter.present({ response });
         }
 
         if (!hasQueryParams(this.req) && !hasBodyParams(this.req)) {
-            const path = this.req.params[0];
-            const headers = this.req.headers;
-            const result = await this.repository.findGet({ path });
-            const response = filterByHeaderData(headers, result);
-            return this.presenter.present({response});
+            const result = await this.repository.findGet({ path: this.getPath() });
+            this.validateResult(result);
+            const response = filterByHeaderData(this.getHeaders(), result);
+            return this.presenter.present({ response });
         }
 
         if (hasBodyParams(this.req)) {
-            const path = this.req.params[0];
-            const headers = this.req.headers;
-            const body = JSON.stringify(this.req.body);
-            const result = await this.repository.findPost({ path, body });
-            const response = filterByHeaderData(headers, result);
-            return this.presenter.present({response});
+            const result = await this.repository.findPost({ path: this.getPath(), body: this.getBody() });
+            this.validateResult(result);
+            const response = filterByHeaderData(this.getHeaders(), result);
+            return this.presenter.present({ response });
+        }
+    }
+
+    getPath() {
+        return this.req.params[0]
+    }
+
+    getBody() {
+        return JSON.stringify(this.req.body);
+    }
+
+    getQuery() {
+        return objectToUrlParams(this.req.query);
+    }
+
+    getHeaders() {
+        return this.req.headers;
+    }
+
+    validateResult(result) {
+        if (result.length === 0) {
+            return this.presenter.presentError({
+                code: 500,
+                message: 'Couldn´t find mock. Please check your request params'
+            })
         }
     }
 }

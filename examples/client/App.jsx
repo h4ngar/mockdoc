@@ -19,7 +19,7 @@ const routes = [
         icon: 'plus',
         exact: true,
         path: '/',
-    },,
+    },
     {
         key: 'edit',
         label: 'Edit Mocks',

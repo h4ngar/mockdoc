@@ -20,4 +20,8 @@ export default class Presenter {
         const result = encodeResponseByContentType(myResponse.responseContentType, myResponse.responseBody);
         return this.response.json(result);
     };
+
+    presentError({ code, message }) {
+        this.response.status(code).json({Error: message})
+    }
 }
