@@ -26,14 +26,14 @@ export const statusOptions = [
 
 export const contentTypeOptions = [
     { label: 'application/json', value: 'application/json' },
-    { label: 'application/x-www-form-urlencoded', value: 'application/x-www-form-urlencoded' },
-    { label: 'application/xhtml+xml', value: 'application/xhtml+xml' },
-    { label: 'application/xml', value: 'application/xml' },
-    { label: 'multipart/form-data', value: 'multipart/form-data' },
-    { label: 'text/css', value: 'text/css' },
-    { label: 'text/csv', value: 'text/csv' },
+    //{ label: 'application/x-www-form-urlencoded', value: 'application/x-www-form-urlencoded' },
+    //{ label: 'application/xhtml+xml', value: 'application/xhtml+xml' },
+    //{ label: 'application/xml', value: 'application/xml' },
+    //{ label: 'multipart/form-data', value: 'multipart/form-data' },
+    //{ label: 'text/css', value: 'text/css' },
+    //{ label: 'text/csv', value: 'text/csv' },
     { label: 'text/html', value: 'text/html' },
-    { label: 'text/json', value: 'text/json' },
+    //{ label: 'text/json', value: 'text/json' },
     { label: 'text/plain', value: 'text/plain' },
     { label: 'text/xml', value: 'text/xml' }
 ];

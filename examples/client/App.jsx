@@ -48,13 +48,12 @@ const App = () => {
                         menuRoutes={routes}
                         style={{marginBottom: 20}}
                         headerBreakpoints={{xs:{span: 24, offset: 0}, xl:{ span: 18, offset: 3}}}
-                        logoBreakpoints={{xs: 0, md: 0, xl:9, xxl:4}}
                         menuBreakpoints={{xs: 0, md: 0, xl:15, xxl:15}}
                         extraBreakpoints={{xs: 0, md: 0, xl:0, xxl:5}}
-                        logo={<Logo to={'/'} image={'/files/logo-light.png'} version={'v1.0.0'}>MockDoc</Logo>}
+                        logo={<Logo to={'/'} image={'/files/logo-light.png'} version={'v1.1.0'}>MockDoc</Logo>}
                     />
                     <Route exact path={'/'} component={NewMock}/>
-                    <Route path={'/mock/:_id/edit'}><NewMock/></Route>
+                    <Route path={'/mock-edit/*'}><NewMock/></Route>
                     <Route exact path={'/edit'} component={EditMock}/>
                     <Route path={'/categories'} component={Categories}/>
 

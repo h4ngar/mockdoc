@@ -1,5 +1,5 @@
-import { MockController } from '../../src/server/MockController';
-import { CategoriesController } from '../../src/server/CategoriesController';
+import MocksController from '../../src/server/mocks/Controller';
+import { CategoriesController } from '../../src/server/categories/CategoriesController';
 import { Server, IndexController } from '@scripty/server';
 import { Logger } from '@scripty/logger';
 import { mongo } from '@scripty/mongo';
@@ -25,7 +25,7 @@ const init = async () => {
         title: 'mockdoc'
     };
     await app.addController(new CategoriesController());
-    await app.addController(new MockController());
+    await app.addController(new MocksController());
     await app.addController(new IndexController(templateConfig));
     app.start();
 };
