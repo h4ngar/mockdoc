@@ -16,8 +16,6 @@ export default class Interactor {
 
     async run() {
 
-        //console.log(hasBodyAndQueryAndUrlParams(this.req), ' hasBodyAndQueryAndUrlParams(this.req) ---------------------- ');
-
         if (hasBodyAndQueryAndUrlParams(this.req)) {
             const path = this.req.params[0];
             const query = objectToUrlParams(this.req.query);
@@ -28,8 +26,6 @@ export default class Interactor {
             return this.presenter.present({response});
         }
 
-        //console.log(hasQueryAndUrlParams(this.req), ' hasQueryAndUrlParams(this.req) ---------------------- ');
-
         if (hasQueryAndUrlParams(this.req)) {
             const path = this.req.params[0];
             const query = objectToUrlParams(this.req.query);
@@ -39,8 +35,6 @@ export default class Interactor {
             return this.presenter.present({response});
         }
 
-        //console.log(!hasQueryParams(this.req) && !hasBodyParams(this.req), ' !hasQueryParams(this.req) && !hasBodyParams(this.req) ---------------------- ');
-
         if (!hasQueryParams(this.req) && !hasBodyParams(this.req)) {
             const path = this.req.params[0];
             const headers = this.req.headers;
@@ -48,8 +42,6 @@ export default class Interactor {
             const response = filterByHeaderData(headers, result);
             return this.presenter.present({response});
         }
-
-        //console.log(hasBodyParams(this.req), ' hasBodyParams(this.req) ---------------------- ');
 
         if (hasBodyParams(this.req)) {
             const path = this.req.params[0];
