@@ -1,18 +1,28 @@
 version: '3'
 
 services:
+#  mongo:
+#    image: mongo
+#    restart: always
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: root
+#      MONGO_INITDB_ROOT_PASSWORD: mongo
+#      MONGO_INITDB_DATABASE: admin
   mockdoc:
     labels:
-      traefik.frontend.rule: "Host:mockdoc.docker.local,www.mockdoc.docker.local"
-      traefik.frontend.entryPoints: "http,https"
-      traefik.frontend.redirect.entryPoint: "https"
-      traefik.port: "3000"
+      traefik.http.routers.mockdoc.rule: "Host(`mockdoc.docker.local`)"
+      traefik.http.routers.mockdoc.tls: "true"
+      traefik.http.services.mockdoc.loadbalancer.server.port: "3000"
+      traefik.http.routers.mockdoc.middlewares: "cors@file"
+      traefik.docker.network: "reverse_proxy"
     volumes:
     - "./:/app"
     environment:
     - NODE_ENV=development
     command: npx nodemon --no-warnings --es-module-specifier-resolution=node ./examples/server/server.js
+#   depends_on:
+#   - mongo
 networks:
   default:
     external:
-      name: dev_vm
+      name: reverse_proxy
